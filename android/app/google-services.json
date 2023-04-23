@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "696079309074",
+    "firebase_url": "https://senecatfg-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "senecatfg",
+    "storage_bucket": "senecatfg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696079309074:android:6a08d4c665ffba7fd47bcb",
+        "android_client_info": {
+          "package_name": "com.example.seneca_tfg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696079309074-09k7jn0tniqqe1aasirj06opo27tatkk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Uy6tmeRpatdAe60lrCuXTB8PlV7GDJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696079309074-09k7jn0tniqqe1aasirj06opo27tatkk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "696079309074-d43325pdpi7rf9llqcjeukmum4u986au.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.senecaTfg"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

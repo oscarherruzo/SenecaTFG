@@ -1,0 +1,6 @@
+package com.example.seneca_tfg
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

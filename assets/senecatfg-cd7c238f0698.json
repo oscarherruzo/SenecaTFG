@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "senecatfg",
+  "private_key_id": "cd7c238f069877c499fc0d2e0efa5ac13f8cc509",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDO/QEOyxMo+K+2\n4rwkuCf+49Z4ef5FISCf4/wz9FGVrZDBEBokxPA9mKwTvBazwm68a+1mmC2Z5fQY\nOPv3UJmNSTth0m23owqMVW1wNT6za3KRh+HXyCbD/7AsOaTYL1R+5L3PdgIEaG04\nTmDaVDhlvbH6F6JhE01dr0s/GTO95MNfi0dmAm/77+EFiLmmNd76vXMb4T4xoM9Q\nzdgLYsNsWU8TQ//TVXop3ENOoUp6cievhnwmvp+2nZh7aewejAPhCufawSU0TPZL\nXuF1s1AXPAg+MmuxAUDh15Y369tDTvtL37bng7UmLNLAU9RCAMVFQ4HtVEY0CVNp\n9nwhxfVzAgMBAAECggEACpnZnoTXD9+gvDijkyvdXIgVuWjiFW9LaPT3uz91mDlh\n8wlclWqCtVzm30HgVceM/Vh3uavslfe5hy4P9YwquRo5kNqCpQeUKDjN2JPZiL3l\nib+QWQlWtu4W+0TehPXzmWYktIXiN5CTm3EkM7phgxByl5DzT456BWTPcUVcqYqA\nxLd8FrHlml84DDICqOnl/4IgGjymvD/+6SHemcCv6ukKaaa0/JWV/EO2/swHwr6K\n1GOjvQRMmI91kYuy7jhL4TaqKIdwbbj3Ks+qKNjCqrYvncMvKFVAZs65QLz2nDyr\nIBeMrxqbc+VV7ujG9/e0P7m88kDG1YP12V2C+lhTjQKBgQDnhdgfN1b9yMnCqM5F\nIfOzyIBYAa+eTSWe9wz2jv/MRdXHD0k36dHInWbXcmiesjMaD9NtRXV8+Y/UHL+5\nSO9UxFMGc5Dnz9jw7DO5RL3RpRNRyUXqkByIwxDNNCcLzn2nVKKAOsNuzR2RQZeY\n0L0SEENg5BKvz6q8OfVgZ+52xQKBgQDk3yJCSoJj4PGJYB4wadOVhgzHybWwJUE/\n5l+x9dzU75pF838Fvq7u61K8oRJ0lHlbHonmmPqbckRUD9uMCc0vIWfOjLSvjl8h\npZQbTP6H59ENtqVGPy31ZgqL4yWbxKaqXBe+djIkN4RX3JHCWGMlFVl3VhTFsf1l\nF2r7oJK+1wKBgQDGba9aqcpz/mf130nSdJPzLU/ana9PxJ0OznycwNi50cy0LAS7\n2DmFcGoZEyRZhy9HEfNKPvLAJwA/clhbzAfbpdvmtpumIjyz2C1Ih4MMsCeLvC6h\nJ9xc1pqK1Tz14IdPJ7mSn0qqpz/FI+ty/MxfM/Mbkr31Us3pPt9wPgNiZQKBgQCd\nnoXrfYDa5Dmz0Dw6P0d1/EGk/edgjeen6DITTy1sgC6Q6iaagD3dULdELPGW1AHX\nnOp/ou9ESqd/9QPQJ5flU244M3LkTHp7o5qiSp4oXp/8f8LG5A/0pvewaxildAML\n5Cx+AMx7YLiGAeNoIpL1IQTiSKg5lmDaVAxbirRFNQKBgCReNvLlsiUG+qIFd2Ar\nfLlZuuEtgA+rzLwXKB8uoKWHNuV76XFTEklFQF4O0Yj+oyDdFktPU7n/lTZb3DGk\nHmPzShz7+TVE2wNc6ePd2f6K4g5nlDD1qsxwyYAENL8pUsvjxW++frm4zBKPeoIo\nnq03TLnVtVnsYmr140MO0J5N\n-----END PRIVATE KEY-----\n",
+  "client_email": "oscar-flutter-tfg@senecatfg.iam.gserviceaccount.com",
+  "client_id": "113641933170303504115",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/oscar-flutter-tfg%40senecatfg.iam.gserviceaccount.com"
+}

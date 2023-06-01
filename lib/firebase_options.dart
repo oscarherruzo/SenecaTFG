@@ -45,7 +45,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCyZ7FIKiUH4JHdPgigMOxuqOcyWkG57i0',
-    appId: '1:696079309074:web:d60f414a6d9fdf04d47bcb',
+    appId: '1:696079309074:web:563b5c66c6af3f9fd47bcb',
     messagingSenderId: '696079309074',
     projectId: 'senecatfg',
     authDomain: 'senecatfg.firebaseapp.com',

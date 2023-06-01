@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:seneca_tfg/Pantallas/alumnosExpulsados.dart';
 import 'package:seneca_tfg/Pantallas/alumnosScreen.dart';
+import 'package:seneca_tfg/Pantallas/banioScreen.dart';
+import 'package:seneca_tfg/Pantallas/convivencia.dart';
+import 'package:seneca_tfg/Pantallas/daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
 
+// PANTALLA DE MENU
 class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -9,10 +15,8 @@ class MenuScreen extends StatelessWidget {
         backgroundColor: Colors.blue.shade900,
         title: const Text('Menú'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
+        // DESACTIVAMOS LA FLECHA DE VOLVER
+        automaticallyImplyLeading: false,
       ),
       body: Stack(
         children: [
@@ -26,8 +30,8 @@ class MenuScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 70),
                     child: Image.asset(
                       'assets/iseneca.png',
-                      width: 2000,
-                      height: 350,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.2,
                     ),
                   ),
                 ),
@@ -41,7 +45,7 @@ class MenuScreen extends StatelessWidget {
             ],
           ),
           Positioned(
-            height: 675,
+            height: MediaQuery.of(context).size.height * 0.7,
             bottom: 80,
             left: 30,
             right: 30,
@@ -66,6 +70,7 @@ class MenuScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      // NAVEGAMOS A LA PANTALLA DE ALUMNOS
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -78,8 +83,8 @@ class MenuScreen extends StatelessWidget {
                           children: [
                             Image.asset(
                               'assets/sombrero.png',
-                              width: 50,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.05,
+                              height: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text(
                               'Alumnado del Centro',
@@ -91,14 +96,20 @@ class MenuScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                      // NAVEGAMOS A LA PANTALLA DE PROFESORES
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfesoresScreen()));
+                        },
                         child: Column(
                           children: [
                             Image.asset(
                               'assets/profesor.png',
-                              width: 50,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.05,
+                              height: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text(
                               'Personal del Centro',
@@ -110,14 +121,20 @@ class MenuScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                      // NAVEGAMOS A LA PANTALLA DE CONVIVENCIA
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ConvivenciaScreen()));
+                        },
                         child: Column(
                           children: [
                             Image.asset(
                               'assets/covid.png',
-                              width: 50,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.05,
+                              height: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text(
                               'Convivencia',
@@ -135,14 +152,20 @@ class MenuScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      // NAVEGAMOS A LA PANTALLA DE DACE
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DACEScreen()));
+                        },
                         child: Column(
                           children: [
                             Image.asset(
                               'assets/campana.png',
-                              width: 50,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.05,
+                              height: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text(
                               'DACE',
@@ -152,14 +175,20 @@ class MenuScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                      // NAVEGAMOS A LA PANTALLA DEL MENU DE BAÑO
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => banioPreviaScreen()));
+                        },
                         child: Column(
                           children: [
                             Image.asset(
                               'assets/calendario.png',
-                              width: 50,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.05,
+                              height: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text('Baño',
                                 style: TextStyle(

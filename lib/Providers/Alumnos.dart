@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+// CLASE DE ALUMNOS
 class Alumnos {
   Alumnos({
     required this.nombre,

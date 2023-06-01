@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seneca_tfg/Pantallas/menuScreen.dart';
+import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
 import 'package:seneca_tfg/Providers/Alumnos.dart';
 import 'package:seneca_tfg/Providers/Provider.dart';
+import 'alumnosExpulsados.dart';
+import 'alumnosScreen.dart';
+import 'anadirNuevoAlumnoScreen.dart';
+import 'banioScreen.dart';
+import 'convivencia.dart';
+import 'daceScreen.dart';
+import 'informesScreen.dart';
+
+// PLANTILLA PARA MANTENER EL FORMATO EN MIS PANTALLAS
 
 class plantillaPantallasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Obtener los datos del provider
     final alumnosProvider = Provider.of<ProviderScreen>(context);
     final List<Alumnos> alumnos = Provider.of<ProviderScreen>(context).alumnos;
     alumnosProvider.getUserFromSheet();
@@ -17,21 +26,83 @@ class plantillaPantallasScreen extends StatelessWidget {
         backgroundColor: Colors.blue.shade900,
         title: const Text('Alumnos'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MenuScreen()),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
             );
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {},
-          ),
-        ],
+        automaticallyImplyLeading:
+            false, // Esta línea evita mostrar la flecha de volver
+        actions: [],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue.shade900,
+              ),
+              child: Text(
+                'Menú',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Alumnos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AlumnosScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Personal del Centro'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfesoresScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Convivencia'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ConvivenciaScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('DACE'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DACEScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Baño'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => banioPreviaScreen()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Stack(
         children: [
@@ -45,8 +116,8 @@ class plantillaPantallasScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 70),
                     child: Image.asset(
                       'assets/iseneca.png',
-                      width: 2000,
-                      height: 350,
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.2,
                     ),
                   ),
                 ),
@@ -66,7 +137,7 @@ class plantillaPantallasScreen extends StatelessWidget {
             ],
           ),
           Positioned(
-            height: 675,
+            height: MediaQuery.of(context).size.height * 0.7,
             bottom: 80,
             left: 30,
             right: 30,

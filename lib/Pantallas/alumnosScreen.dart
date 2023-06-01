@@ -1,47 +1,134 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/anadirNuevoAlumnoScreen.dart';
+import 'package:seneca_tfg/Pantallas/banioScreen.dart';
+import 'package:seneca_tfg/Pantallas/convivencia.dart';
+
 import 'package:seneca_tfg/Pantallas/menuScreen.dart';
+import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
 import 'package:seneca_tfg/Providers/Alumnos.dart';
 import 'package:seneca_tfg/Providers/Provider.dart';
 
-class AlumnosScreen extends StatelessWidget {
+import 'alumnosExpulsados.dart';
+import 'anadirNuevoAlumnoScreen.dart';
+import 'daceScreen.dart';
+
+class AlumnosScreen extends StatefulWidget {
+  @override
+  _AlumnosScreenState createState() => _AlumnosScreenState();
+}
+
+class _AlumnosScreenState extends State<AlumnosScreen> {
+  String _nombreBuscar = '';
+  String _cursoSeleccionado = '';
+
   @override
   Widget build(BuildContext context) {
-    // Obtener los datos del provider
     final alumnosProvider = Provider.of<ProviderScreen>(context);
     final List<Alumnos> alumnos = Provider.of<ProviderScreen>(context).alumnos;
     alumnosProvider.getUserFromSheet();
+
+    final filteredAlumnos = alumnos.where((alumno) {
+      final nombreCompleto =
+          '${alumno.nombre} ${alumno.apellidos}'.toLowerCase();
+      return nombreCompleto.contains(_nombreBuscar.toLowerCase()) &&
+          (alumno.curso == _cursoSeleccionado || _cursoSeleccionado.isEmpty);
+    }).toList();
+
+    final List<String> cursos =
+        alumnos.map((alumno) => alumno.curso).toSet().toList();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
         title: const Text('Alumnos'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MenuScreen()),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
             );
           },
         ),
+        automaticallyImplyLeading:
+            false, // Esta línea evita mostrar la flecha de volver
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => anadirAlumno()),
-                );
-              },
-              child: Text('Añadir Nuevo Alumno'),
-              style: ElevatedButton.styleFrom(primary: Colors.blue.shade700),
-            ),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => anadirAlumno()),
+              );
+            },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue.shade900,
+              ),
+              child: Text(
+                'Menú',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Alumnos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AlumnosScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Personal del Centro'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfesoresScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Convivencia'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ConvivenciaScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('DACE'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DACEScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Baño'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => banioPreviaScreen()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Stack(
         children: [
@@ -76,7 +163,7 @@ class AlumnosScreen extends StatelessWidget {
             ],
           ),
           Positioned(
-            height: 675,
+            height: MediaQuery.of(context).size.height * 0.7,
             bottom: 80,
             left: 30,
             right: 30,
@@ -98,100 +185,161 @@ class AlumnosScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              _nombreBuscar = value;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Buscar por nombre',
+                            prefixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        flex: 1,
+                        child: DropdownButtonFormField<String>(
+                          value: _cursoSeleccionado,
+                          onChanged: (value) {
+                            setState(() {
+                              _cursoSeleccionado = value!;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Filtrar por curso',
+                            border: OutlineInputBorder(),
+                          ),
+                          items: [
+                            DropdownMenuItem<String>(
+                              value: '',
+                              child: Text('Todos'),
+                            ),
+                            ...cursos.map((curso) {
+                              return DropdownMenuItem<String>(
+                                value: curso,
+                                child: Text(curso),
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                    ],
+                  ),
+                  SizedBox(height: 10),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: alumnos.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            '${alumnos[index].nombre} ${alumnos[index].apellidos}',
-                            textAlign: TextAlign.left,
-                          ),
-                          subtitle: Text(
-                            alumnos[index].curso,
-                            textAlign: TextAlign.left,
-                          ),
-                          trailing: ElevatedButton.icon(
-                            icon: Icon(Icons.content_paste),
-                            label: Text('+Info'),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  title: Text('Información del alumno',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Nombre:',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                    child: alumnos.isEmpty
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ListView.builder(
+                            itemCount: filteredAlumnos.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(
+                                  '${filteredAlumnos[index].nombre} ${filteredAlumnos[index].apellidos}',
+                                  textAlign: TextAlign.left,
+                                ),
+                                subtitle: Text(
+                                  filteredAlumnos[index].curso,
+                                  textAlign: TextAlign.left,
+                                ),
+                                trailing: ElevatedButton.icon(
+                                  icon: Icon(Icons.content_paste),
+                                  label: Text('+Info'),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: Text(
+                                          'Información del alumno',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Nombre:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              '${filteredAlumnos[index].nombre}',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              'Apellidos:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              '${filteredAlumnos[index].apellidos}',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              'Curso:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              '${filteredAlumnos[index].curso}',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              'Observaciones:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              '${filteredAlumnos[index].observaciones}',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: ElevatedButton.icon(
+                                              icon: Icon(Icons.arrow_back),
+                                              label: Text('Cerrar'),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        '${alumnos[index].nombre}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 16),
-                                      Text(
-                                        'Apellidos:',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        '${alumnos[index].apellidos}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 16),
-                                      Text(
-                                        'Curso:',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        '${alumnos[index].curso}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 16),
-                                      Text(
-                                        'Observaciones:',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        '${alumnos[index].observaciones}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: ElevatedButton.icon(
-                                          icon: Icon(Icons.arrow_back),
-                                          label: Text('Cerrar'),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ))
-                                  ],
+                                    );
+                                  },
                                 ),
                               );
                             },
                           ),
-                        );
-                      },
-                    ),
                   ),
                 ],
               ),

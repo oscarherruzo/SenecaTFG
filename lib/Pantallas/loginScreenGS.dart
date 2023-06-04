@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
 import 'package:seneca_tfg/Providers/googleClass.dart';
 import 'package:seneca_tfg/Providers/googleProvider.dart';
 
+// CLASE LOGIN GS SCREEN
 class loginGSScreen extends StatefulWidget {
   @override
   _loginGSScreenState createState() => _loginGSScreenState();
 }
 
 class _loginGSScreenState extends State<loginGSScreen> {
+  // INICIALIZAMOS VARIALES
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String errorMessage = '';
@@ -19,10 +19,11 @@ class _loginGSScreenState extends State<loginGSScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // PROVIDERS DE LA LISTA QUE TIENE LOS CORREOS Y CONTRASEÑAS
     final alumnosProvider = Provider.of<EmailProvider>(context);
     final List<googleClass> alumnos = alumnosProvider.profesores;
     alumnosProvider.getUserFromSheet();
-
+// EL USUARIO NO PUEDE ACCEDER A OTRA PANTALLA
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -38,6 +39,7 @@ class _loginGSScreenState extends State<loginGSScreen> {
               Column(
                 children: [
                   Expanded(
+                    // IMAGEN DE ISENECA
                     flex: 1,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 70),
@@ -72,6 +74,7 @@ class _loginGSScreenState extends State<loginGSScreen> {
                     vertical: 15.0,
                     horizontal: 30.0,
                   ),
+                  // BORDES GRISES
                   decoration: BoxDecoration(
                     color: Colors.blue.shade900,
                     borderRadius: BorderRadius.circular(10),
@@ -112,9 +115,7 @@ class _loginGSScreenState extends State<loginGSScreen> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: TextFormField(
                           controller: passwordController,
-                          style: TextStyle(
-                              color: Colors
-                                  .white), // Cambio de color del texto a blanco
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
                             labelStyle: TextStyle(color: Colors.grey),
@@ -127,45 +128,52 @@ class _loginGSScreenState extends State<loginGSScreen> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
+                          // TEXTO DE LA CONTRASEÑA QUE NO SE MUESTRE
                           obscureText: true,
                         ),
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: isLoggingIn
+                            // SI ES VERDADERO A NULO
                             ? null
+                            // SI NO ESTA LOGUEADO PASAMOS VACIAMOS EL MENSAJE Y DEFINIMOS isLoggingIn A TRUE
                             : () async {
                                 setState(() {
                                   errorMessage = '';
                                   isLoggingIn = true;
                                 });
-
+                                // VARIABLES EN LAS QUE GUARDAMOS LOS TEXTOS RECOLECTADOS DE LOS TEXTFORMFIELD
                                 String email = emailController.text;
                                 String password = passwordController.text;
-                                bool isValid = false;
-
+                                // BOOLEANA PARA COMPROBAR SI ESTÁ TODO CORRECTO O NO
+                                bool esValida = false;
+                                // BUCLE PARA COMPROBAR SI ALGUNO DE LOS MAILS Y CONTRASEÑAS SON CORRECTOS
                                 for (var alumno in alumnos) {
                                   if (alumno.mail == email &&
                                       alumno.contrasenia == password) {
-                                    isValid = true;
+                                    esValida = true;
                                     break;
                                   }
                                 }
-
-                                if (isValid) {
+                                // SI ES VÁLIDA ESTABLECEMOS EL MENSAJE DE ERROR POR DEFECTO A VACÍO
+                                if (esValida) {
                                   setState(() {
                                     errorMessage = '';
                                   });
+                                  // NAVEGAMOS AL MENÚ
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => MenuScreen(),
                                     ),
                                   );
+                                  // SI NO MOSTRAMOS EL MENSAJE DE ARROR
                                 } else {
                                   setState(() {
                                     errorMessage =
                                         'Email o contraseña incorrectos';
+                                    //BOOLEANA DEFINIDA A FALSO
                                     isLoggingIn = false;
                                   });
                                 }
@@ -183,12 +191,15 @@ class _loginGSScreenState extends State<loginGSScreen> {
                               side: BorderSide(color: Colors.white)),
                         ),
                       ),
+                      // SI EL MENSAJE NO ESTA VACIO
                       if (errorMessage.isNotEmpty)
                         Container(
                           margin: EdgeInsets.only(top: 10.0),
+                          // MOSTRAMOS EL MENSAJE
                           child: Text(
                             errorMessage,
                             style: TextStyle(
+                              // DEFINIMOS EL COLOR DEL TEXTO A ROJO
                               color: Colors.red,
                             ),
                           ),
@@ -197,15 +208,17 @@ class _loginGSScreenState extends State<loginGSScreen> {
                   ),
                 ),
               ),
+              // POSICION DEL LOGO
               Positioned(
                 top: MediaQuery.of(context).size.height * 0.15,
                 left: MediaQuery.of(context).size.width * 0.25,
                 child: Image.asset(
-                  '3.png',
+                  'assets/logo.png',
                   height: MediaQuery.of(context).size.height * 0.3,
                   width: MediaQuery.of(context).size.width * 0.5,
                 ),
               ),
+              // POSICION DEL ICONO DE LA JUNTA
               Positioned(
                 bottom: 100,
                 right: 60,

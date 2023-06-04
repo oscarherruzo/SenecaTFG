@@ -102,6 +102,7 @@ class anadirAlumno extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
+                          // DEFINIMOS QUE EL CAMPO EL OBLIGATORIO
                           return 'Este campo es obligatorio';
                         }
                         return null;
@@ -114,6 +115,7 @@ class anadirAlumno extends StatelessWidget {
                         labelText: 'Apellidos',
                         icon: Icon(Icons.person_outline),
                       ),
+                      // DEFINIMOS QUE EL CAMPO EL OBLIGATORIO
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Este campo es obligatorio';

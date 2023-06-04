@@ -42,64 +42,100 @@ class DACEScreen extends StatelessWidget {
         actions: [],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue.shade900,
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade900,
+                    ),
+                    child: Text(
+                      'Menú',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Menú Principal'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MenuScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Alumnos'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AlumnosScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Personal del Centro'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfesoresScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Convivencia'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConvivenciaScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('DACE'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DACEScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Baño'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => banioPreviaScreen()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              child: Text(
-                'Menú',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
             ),
             ListTile(
-              title: Text('Alumnos'),
+              title: Text('Ayuda'),
+              leading: Icon(Icons.help_outline),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AlumnosScreen()),
-                );
+                String url =
+                    'https://miro.com/app/board/uXjVMDxywRA=/?share_link_id=600263225023';
+                _launchURL(url);
               },
             ),
             ListTile(
-              title: Text('Personal del Centro'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfesoresScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Convivencia'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ConvivenciaScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('DACE'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DACEScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Baño'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => banioPreviaScreen()),
-                );
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Cerrar Sesión'),
+              onTap: () async {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/', (Route<dynamic> route) => false);
               },
             ),
           ],
@@ -175,7 +211,7 @@ class DACEScreen extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Fecha Incio',
+                          'Fecha Inicio',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

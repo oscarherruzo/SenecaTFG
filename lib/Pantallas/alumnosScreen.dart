@@ -2,40 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seneca_tfg/Pantallas/banioScreen.dart';
 import 'package:seneca_tfg/Pantallas/convivencia.dart';
-
 import 'package:seneca_tfg/Pantallas/menuScreen.dart';
 import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
 import 'package:seneca_tfg/Providers/Alumnos.dart';
 import 'package:seneca_tfg/Providers/Provider.dart';
-
-import 'alumnosExpulsados.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'anadirNuevoAlumnoScreen.dart';
 import 'daceScreen.dart';
 
+// CLASE ALUMNOS
 class AlumnosScreen extends StatefulWidget {
   @override
   _AlumnosScreenState createState() => _AlumnosScreenState();
 }
 
 class _AlumnosScreenState extends State<AlumnosScreen> {
+  // DEFINICIÓN DE VARIABLES
   String _nombreBuscar = '';
   String _cursoSeleccionado = '';
 
   @override
   Widget build(BuildContext context) {
+    // LISTA DE ALUNOS
     final alumnosProvider = Provider.of<ProviderScreen>(context);
     final List<Alumnos> alumnos = Provider.of<ProviderScreen>(context).alumnos;
     alumnosProvider.getUserFromSheet();
-
+    // FILTRO DE ALUMNOS
     final filteredAlumnos = alumnos.where((alumno) {
       final nombreCompleto =
           '${alumno.nombre} ${alumno.apellidos}'.toLowerCase();
       return nombreCompleto.contains(_nombreBuscar.toLowerCase()) &&
           (alumno.curso == _cursoSeleccionado || _cursoSeleccionado.isEmpty);
     }).toList();
-
-    final List<String> cursos =
-        alumnos.map((alumno) => alumno.curso).toSet().toList();
+    // LISTA DE CURSOS
+    List<String> cursos = [
+      '1º ESO',
+      '2º ESO',
+      '3º ESO',
+      '4º ESO',
+      '1º Bachillerato',
+      '2º Bachillerato',
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -52,9 +59,10 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
             );
           },
         ),
-        automaticallyImplyLeading:
-            false, // Esta línea evita mostrar la flecha de volver
+        // DESACTIVAMOS LA FECHA DE VOLVER PARA QUE NO HAGA CONFLICTO CON EL ICONO DEL MENÚ DE HAMBURGUESA
+        automaticallyImplyLeading: false,
         actions: [
+          // BOTÓN DE + PARA AÑADIR ALUMNOS
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
@@ -66,65 +74,102 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
           ),
         ],
       ),
+      // MENU DE HAMBURGUESA
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue.shade900,
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade900,
+                    ),
+                    child: Text(
+                      'Menú',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Menú Principal'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MenuScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Alumnos'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AlumnosScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Personal del Centro'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfesoresScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Convivencia'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConvivenciaScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('DACE'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DACEScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Baño'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => banioPreviaScreen()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              child: Text(
-                'Menú',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
             ),
             ListTile(
-              title: Text('Alumnos'),
+              title: Text('Ayuda'),
+              leading: Icon(Icons.help_outline),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AlumnosScreen()),
-                );
+                String url =
+                    'https://miro.com/app/board/uXjVMDxywRA=/?share_link_id=600263225023';
+                _launchURL(url);
               },
             ),
             ListTile(
-              title: Text('Personal del Centro'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfesoresScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Convivencia'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ConvivenciaScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('DACE'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DACEScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Baño'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => banioPreviaScreen()),
-                );
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Cerrar Sesión'),
+              onTap: () async {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/', (Route<dynamic> route) => false);
               },
             ),
           ],
@@ -192,6 +237,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                         child: TextField(
                           onChanged: (value) {
                             setState(() {
+                              // VALOR DEL NOMBRE A BUSCAR
                               _nombreBuscar = value;
                             });
                           },
@@ -209,6 +255,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                           value: _cursoSeleccionado,
                           onChanged: (value) {
                             setState(() {
+                              // CURSO SELECCIONADO
                               _cursoSeleccionado = value!;
                             });
                           },
@@ -237,13 +284,16 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                   Expanded(
                     child: alumnos.isEmpty
                         ? Center(
+                            // CIRCULAR PROGRESS INDICATOR MIENTRAS CARGA LOS DATOS
                             child: CircularProgressIndicator(),
                           )
                         : ListView.builder(
+                            // LONGITUD DE LA LISTA
                             itemCount: filteredAlumnos.length,
                             itemBuilder: (context, index) {
                               return ListTile(
                                 title: Text(
+                                  // MOSTRAMOS NOMBRES Y APELLIDOS DE LOS ALUMNOS FILTRADOS
                                   '${filteredAlumnos[index].nombre} ${filteredAlumnos[index].apellidos}',
                                   textAlign: TextAlign.left,
                                 ),
@@ -251,6 +301,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                   filteredAlumnos[index].curso,
                                   textAlign: TextAlign.left,
                                 ),
+                                // MOSTRAMOS MÁS INFORMACIÓN SOLICITADA DEL ALUMNO EN UN ALERT DIALOG
                                 trailing: ElevatedButton.icon(
                                   icon: Icon(Icons.content_paste),
                                   label: Text('+Info'),
@@ -357,5 +408,16 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
         ],
       ),
     );
+  }
+
+  // METODO PARA ABRIR LA URL, SINO IGNORAMOS QUE ESTAN DEPRECADAS CUANDO HACEMOS EL HOSTING NO NOS ABRE EL ENLACE AUNQUE EN LOCAL SI, SI LAS IGNORAMOS SI LO ABRE SUBIDO
+  void _launchURL(String url) async {
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(url);
+    } else {
+      throw 'No se pudo abrir el enlace $url';
+    }
   }
 }

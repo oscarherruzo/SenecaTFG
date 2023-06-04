@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seneca_tfg/Pantallas/alumnosExpulsados.dart';
+import 'package:seneca_tfg/Pantallas/convivencia.dart';
 import 'package:seneca_tfg/Pantallas/daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/expulsionAnadir.dart';
 import 'package:seneca_tfg/Pantallas/informesScreen.dart';
 import 'package:seneca_tfg/Pantallas/loginScreenGS.dart';
 import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
+import 'package:seneca_tfg/Pantallas/prueba.dart';
 import 'package:seneca_tfg/Pantallas/salidaScreen.dart';
 import 'package:seneca_tfg/Pantallas/banioScreen.dart';
 
@@ -46,37 +49,35 @@ final credenciales = {
 final spreadsheetID = '1EQ8RroLG2qQEmuyURmh9jFpq0uJEm3OvQ3jUc6dkCmw';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Inicializa Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(
-    // MULTI PROVIDER SIEMPRE AÑADIR NUEVO PROVIDER SI NO SALTA EXCEPCION
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<ProviderScreen>(
           create: (context) => ProviderScreen(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<providerExpulsados>(
           create: (context) => providerExpulsados(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<providerProfesores>(
           create: (context) => providerProfesores(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<UbicacionProvider>(
           create: (context) => UbicacionProvider(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<EmailProvider>(
           create: (context) => EmailProvider(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<ConvivenciaProvider>(
           create: (context) => ConvivenciaProvider(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<DACEProvider>(
           create: (context) => DACEProvider(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<EntradaProvider>(
           create: (context) => EntradaProvider(),
         ),
       ],
@@ -93,7 +94,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: loginGSScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => loginGSScreen(),
+        '/menu': (context) => MenuScreen(),
+        '/alumnos': (context) => AlumnosScreen(),
+        '/profesores': (context) => ProfesoresScreen(),
+        '/convivencia': (context) => ConvivenciaScreen(),
+        '/dace': (context) => DACEScreen(),
+        '/baño-previa': (context) => banioPreviaScreen(),
+        '/alumno-añadir': (context) => anadirAlumno(),
+        '/expulsado-añadir': (context) => ExpulsadosInsertScreen(),
+        '/mayores': (context) => MayoresScreen(),
+        '/baño': (context) => SalidaScreen(),
+        '/informes': (context) => InformesScreen(),
+      },
     );
   }
 }

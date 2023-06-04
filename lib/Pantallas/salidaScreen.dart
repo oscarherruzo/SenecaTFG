@@ -8,6 +8,7 @@ import 'package:seneca_tfg/Providers/Provider.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:flutter_intl/flutter_intl.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'alumnosScreen.dart';
 import 'banioScreen.dart';
@@ -50,13 +51,13 @@ class _SalidaScreenState extends State<SalidaScreen> {
       '2º Bachiller'
     ];
 
-    // Filter the alumnos list based on the selected curso
+    // FILTRAMOS POR CURSO
     final filteredAlumnos = alumnos
         .where((alumno) =>
             alumno.curso == _selectedCurso || _selectedCurso == 'Todos')
         .toList();
 
-    // Initialize button states and salida times for each alumno
+    // INCIALIZAMOS EL BOTON POR CADA ALUMNO
     if (_acceptButtonStates.isEmpty) {
       _acceptButtonStates = List<bool>.filled(filteredAlumnos.length, true);
       _salidaTimes = List<DateTime?>.filled(filteredAlumnos.length, null);
@@ -77,69 +78,106 @@ class _SalidaScreenState extends State<SalidaScreen> {
             );
           },
         ),
-        automaticallyImplyLeading:
-            false, // Esta línea evita mostrar la flecha de volver
+        // ELIMINAMOS LA FECHA DE VOLVER
+        automaticallyImplyLeading: false,
         actions: [],
       ),
+      // DRAWER O MENÚ HAMBURGUESA
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue.shade900,
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade900,
+                    ),
+                    child: Text(
+                      'Menú',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Menú Principal'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MenuScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Alumnos'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AlumnosScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Personal del Centro'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfesoresScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Convivencia'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConvivenciaScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('DACE'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DACEScreen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Baño'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => banioPreviaScreen()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              child: Text(
-                'Menú',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
             ),
             ListTile(
-              title: Text('Alumnos'),
+              title: Text('Ayuda'),
+              leading: Icon(Icons.help_outline),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AlumnosScreen()),
-                );
+                String url =
+                    'https://miro.com/app/board/uXjVMDxywRA=/?share_link_id=600263225023';
+                _launchURL(url);
               },
             ),
             ListTile(
-              title: Text('Personal del Centro'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfesoresScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Convivencia'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ConvivenciaScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('DACE'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DACEScreen()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Baño'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => banioPreviaScreen()),
-                );
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Cerrar Sesión'),
+              onTap: () async {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/', (Route<dynamic> route) => false);
               },
             ),
           ],
@@ -201,7 +239,21 @@ class _SalidaScreenState extends State<SalidaScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ListTile(
-                    title: Text(_selectedCurso),
+                    title: Container(
+                      margin: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1.0,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 12.0),
+                        child: Text(_selectedCurso),
+                      ),
+                    ),
                     trailing: Icon(Icons.arrow_drop_down),
                     onTap: () {
                       if (_isEntryMode) return;
@@ -373,5 +425,16 @@ class _SalidaScreenState extends State<SalidaScreen> {
         ],
       ),
     );
+  }
+
+  // METODO PARA ABRIR LA URL, SINO IGNORAMOS QUE ESTAN DEPRECADAS CUANDO HACEMOS EL HOSTING NO NOS ABRE EL ENLACE AUNQUE EN LOCAL SI, SI LAS IGNORAMOS SI LO ABRE SUBIDO
+  void _launchURL(String url) async {
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(url);
+    } else {
+      throw 'No se pudo abrir el enlace $url';
+    }
   }
 }

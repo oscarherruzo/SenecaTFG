@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/banioScreen.dart';
-import 'package:seneca_tfg/Pantallas/convivencia.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'anadirNuevoAlumnoScreen.dart';
-import 'daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // CLASE ALUMNOS
 class AlumnosScreen extends StatefulWidget {
@@ -34,6 +27,8 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
       return nombreCompleto.contains(_nombreBuscar.toLowerCase()) &&
           (alumno.curso == _cursoSeleccionado || _cursoSeleccionado.isEmpty);
     }).toList();
+    // Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     // LISTA DE CURSOS
     List<String> cursos = [
       '1º ESO',
@@ -100,16 +95,6 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => MenuScreen()),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Alumnos'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AlumnosScreen()),
                       );
                     },
                   ),
@@ -271,7 +256,12 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                             ...cursos.map((curso) {
                               return DropdownMenuItem<String>(
                                 value: curso,
-                                child: Text(curso),
+                                child: Text(
+                                  curso,
+                                  style: TextStyle(
+                                    fontSize: isMobile ? 14 : 24,
+                                  ),
+                                ),
                               );
                             }).toList(),
                           ],
@@ -296,10 +286,16 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                   // MOSTRAMOS NOMBRES Y APELLIDOS DE LOS ALUMNOS FILTRADOS
                                   '${filteredAlumnos[index].nombre} ${filteredAlumnos[index].apellidos}',
                                   textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: isMobile ? 14 : 24,
+                                  ),
                                 ),
                                 subtitle: Text(
                                   filteredAlumnos[index].curso,
                                   textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: isMobile ? 14 : 24,
+                                  ),
                                 ),
                                 // MOSTRAMOS MÁS INFORMACIÓN SOLICITADA DEL ALUMNO EN UN ALERT DIALOG
                                 trailing: ElevatedButton.icon(
@@ -313,6 +309,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                           'Información del alumno',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
+                                            fontSize: isMobile ? 14 : 24,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
@@ -324,6 +321,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                             Text(
                                               'Nombre:',
                                               style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -331,11 +329,15 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                             Text(
                                               '${filteredAlumnos[index].nombre}',
                                               textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
                                             ),
                                             SizedBox(height: 16),
                                             Text(
                                               'Apellidos:',
                                               style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -343,11 +345,15 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                             Text(
                                               '${filteredAlumnos[index].apellidos}',
                                               textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
                                             ),
                                             SizedBox(height: 16),
                                             Text(
                                               'Curso:',
                                               style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -355,11 +361,15 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                             Text(
                                               '${filteredAlumnos[index].curso}',
                                               textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
                                             ),
                                             SizedBox(height: 16),
                                             Text(
                                               'Observaciones:',
                                               style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -367,6 +377,9 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                             Text(
                                               '${filteredAlumnos[index].observaciones}',
                                               textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
                                             ),
                                           ],
                                         ),

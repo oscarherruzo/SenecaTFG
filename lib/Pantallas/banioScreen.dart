@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/alumnosExpulsados.dart';
-import 'package:seneca_tfg/Pantallas/informesScreen.dart';
-import 'package:seneca_tfg/Pantallas/mayoresScreen.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Pantallas/salidaScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'convivencia.dart';
-import 'daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // CLASE BAÑO
 class banioPreviaScreen extends StatefulWidget {
@@ -26,6 +15,8 @@ class _banioPreviaScreen extends State<banioPreviaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,

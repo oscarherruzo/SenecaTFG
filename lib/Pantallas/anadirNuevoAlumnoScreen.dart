@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // CLASE AÑADIR ALUMNO
 class anadirAlumno extends StatelessWidget {
@@ -31,7 +29,7 @@ class anadirAlumno extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MenuScreen()),
+              MaterialPageRoute(builder: (context) => AlumnosScreen()),
             );
           },
         ),

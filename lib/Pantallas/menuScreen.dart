@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:seneca_tfg/Pantallas/alumnosScreen.dart';
-import 'package:seneca_tfg/Pantallas/banioScreen.dart';
-import 'package:seneca_tfg/Pantallas/convivencia.dart';
-import 'package:seneca_tfg/Pantallas/daceScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // PANTALLA DE MENU
 class MenuScreen extends StatelessWidget {
@@ -81,106 +77,91 @@ class MenuScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // NAVEGAMOS A LA PANTALLA DE ALUMNOS
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AlumnosScreen()),
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/sombrero.png',
-                                  // ANCHO Y ALTO POR SI ES UN MOVIL
-                                  width: esMovil
-                                      ? 30
-                                      : 50, // Reducir tamaño de imagen
-                                  height: esMovil
-                                      ? 30
-                                      : 50, // Reducir tamaño de imagen
-                                ),
-                                Text(
-                                  'Alumnado del Centro',
-                                  style: TextStyle(
-                                    fontSize: esMovil
-                                        // FUENTE ADAPTADA POR SI ES MOVIL
-                                        ? 12
-                                        : 18,
-                                    fontWeight: FontWeight.bold,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Row(
+                          mainAxisAlignment: esMovil
+                              ? MainAxisAlignment.spaceBetween
+                              : MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AlumnosScreen()),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/sombrero.png',
+                                    width: esMovil ? 30 : 50,
+                                    height: esMovil ? 30 : 50,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    'Alumnado \ndel Centro',
+                                    style: TextStyle(
+                                      fontSize: esMovil ? 12 : 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          // NAVEGAMOS A LA PANTALLA DE PROFESORES
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfesoresScreen()),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/profesor.png',
+                                    width: esMovil ? 30 : 50,
+                                    height: esMovil ? 30 : 50,
+                                  ),
+                                  Text(
+                                    'Personal \ndel Centro',
+                                    style: TextStyle(
+                                      fontSize: esMovil ? 12 : 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ProfesoresScreen()));
-                            },
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/profesor.png',
-                                  // ANCHO Y ALTO POR SI ES UN MOVIL
-                                  width: esMovil ? 30 : 50,
-                                  height: esMovil ? 30 : 50,
-                                ),
-                                Text(
-                                  'Personal del Centro',
-                                  style: TextStyle(
-                                    fontSize: esMovil
-                                        // FUENTE POR SI ES UN MOVIL
-                                        ? 12
-                                        : 18,
-                                    fontWeight: FontWeight.bold,
+                                          ConvivenciaScreen()),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/covid.png',
+                                    width: esMovil ? 30 : 50,
+                                    height: esMovil ? 30 : 50,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // NAVEGAMOS A LA PANTALLA DE CONVIVENCIA
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ConvivenciaScreen()));
-                            },
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/covid.png',
-                                  // ANCHO Y ALTO POR SI ES UN MOVIL
-                                  width: esMovil ? 30 : 50,
-                                  height: esMovil
-                                      ? 30
-                                      : 50, // Reducir tamaño de imagen
-                                ),
-                                Text(
-                                  'Convivencia',
-                                  style: TextStyle(
-                                    fontSize: esMovil
-                                        // FUENTE POR SI ES UN MOVIL
-                                        ? 12
-                                        : 18, // Reducir tamaño de fuente en dispositivos móviles
-                                    fontWeight: FontWeight.bold,
+                                  Text(
+                                    'Convivencia',
+                                    style: TextStyle(
+                                      fontSize: esMovil ? 12 : 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 100),
                       Row(

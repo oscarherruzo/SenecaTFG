@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/expulsionAnadir.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/ExpulsadosProvider.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
-import 'package:seneca_tfg/Providers/alumnoExpulsado.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'banioScreen.dart';
-import 'convivencia.dart';
-import 'daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // CLASE EXPULSADOS
 class expulsadosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // PROVIDER EXPULSADOS
+    // Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
+    // Provider de Expulsados
     final expulsadosProvider = Provider.of<providerExpulsados>(context);
     final List<expulsadoAlumno> alumnosExpulsados =
         Provider.of<providerExpulsados>(context).alumnos;
     expulsadosProvider.getUserFromSheet();
-// SCAFFOLD
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
@@ -39,8 +31,7 @@ class expulsadosScreen extends StatelessWidget {
             );
           },
         ),
-        automaticallyImplyLeading:
-            false, // Esta línea evita mostrar la flecha de volver
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -54,7 +45,6 @@ class expulsadosScreen extends StatelessWidget {
           ),
         ],
       ),
-      // DRAWER O MENÚ HAMBURGUESA
       drawer: Drawer(
         child: Column(
           children: [
@@ -70,7 +60,7 @@ class expulsadosScreen extends StatelessWidget {
                       'Menú',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: isMobile ? 18 : 24,
                       ),
                     ),
                   ),
@@ -166,7 +156,6 @@ class expulsadosScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 70),
                     child: Image.asset(
-                      // IMAGEN DE ISENECA ENCIMA DEL STACK
                       'assets/iseneca.png',
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.2,
@@ -188,7 +177,6 @@ class expulsadosScreen extends StatelessWidget {
               ),
             ],
           ),
-          // POSICION DE LA IMAGEN DE ISENECA CON MEDIA QUERY
           Positioned(
             height: MediaQuery.of(context).size.height * 0.7,
             bottom: 80,
@@ -211,7 +199,6 @@ class expulsadosScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // MOSTRAR EN UNA FILA AL ALUMNO EXPULSADO
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -220,27 +207,27 @@ class expulsadosScreen extends StatelessWidget {
                         child: Text(
                           'Nombre',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 14 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: Text(
                           'Curso',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 14 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 1,
                         child: Text(
                           'Fecha',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 14 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -249,7 +236,6 @@ class expulsadosScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                    // CIRCULAR PROGRESS INDICATOR
                     child: alumnosExpulsados.isEmpty
                         ? Center(
                             child: CircularProgressIndicator(),
@@ -265,28 +251,31 @@ class expulsadosScreen extends StatelessWidget {
                                     Expanded(
                                       flex: 3,
                                       child: Text(
-                                        // NOMBRE
-                                        // ignore: unnecessary_string_interpolations
                                         '${alumnosExpulsados[index].nombre}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 14 : 24,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
                                       flex: 2,
                                       child: Text(
-                                        // CURSO
-                                        // ignore: unnecessary_string_interpolations
                                         '${alumnosExpulsados[index].curso}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 14 : 24,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
                                       flex: 1,
                                       child: Text(
-                                        // FECHA
-                                        // ignore: unnecessary_string_interpolations
                                         '${alumnosExpulsados[index].fecha}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 14 : 24,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -302,7 +291,6 @@ class expulsadosScreen extends StatelessWidget {
               ),
             ),
           ),
-          // IMAGEN ABAJO DE LA DERECHA DEL STACK
           Positioned(
             bottom: 100,
             right: 60,
@@ -317,7 +305,6 @@ class expulsadosScreen extends StatelessWidget {
     );
   }
 
-  // METODO PARA ABRIR LA URL, SINO IGNORAMOS QUE ESTAN DEPRECADAS CUANDO HACEMOS EL HOSTING NO NOS ABRE EL ENLACE AUNQUE EN LOCAL SI, SI LAS IGNORAMOS SI LO ABRE SUBIDO
   void _launchURL(String url) async {
     // ignore: deprecated_member_use
     if (await canLaunch(url)) {

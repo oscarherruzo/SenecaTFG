@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
-import 'package:seneca_tfg/Providers/daceClass.dart';
-import 'package:seneca_tfg/Providers/daceProvider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'banioScreen.dart';
-import 'convivencia.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // PANTALLA DACE
 class DACEScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     // PROVIDER DE MI LISTA DACE
     final alumnosProvider = Provider.of<DACEProvider>(context);
     final List<DACEClass> daceActividades =
@@ -96,15 +89,6 @@ class DACEScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ConvivenciaScreen()),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    title: Text('DACE'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DACEScreen()),
                       );
                     },
                   ),
@@ -201,9 +185,9 @@ class DACEScreen extends StatelessWidget {
                       Expanded(
                         flex: 3,
                         child: Text(
-                          'Nombre de la Actividad',
+                          'Actividad',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 11 : 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -211,9 +195,9 @@ class DACEScreen extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Fecha Inicio',
+                          'Inicio',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 11 : 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -221,9 +205,9 @@ class DACEScreen extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          'Fecha de Vuelta',
+                          'Vuelta',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 11 : 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -233,7 +217,7 @@ class DACEScreen extends StatelessWidget {
                         child: Text(
                           'Enlace',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 11 : 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -260,6 +244,9 @@ class DACEScreen extends StatelessWidget {
                                       child: Text(
                                         '${daceActividades[index].nombre}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 20,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -267,6 +254,9 @@ class DACEScreen extends StatelessWidget {
                                       child: Text(
                                         '${daceActividades[index].fechaInicio}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 20,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -274,6 +264,9 @@ class DACEScreen extends StatelessWidget {
                                       child: Text(
                                         '${daceActividades[index].fechaFin}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 20,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -284,7 +277,12 @@ class DACEScreen extends StatelessWidget {
                                           _launchURL(
                                               daceActividades[index].enlace);
                                         },
-                                        child: Text('Abrir'),
+                                        child: Text(
+                                          'Abrir',
+                                          style: TextStyle(
+                                            fontSize: isMobile ? 12 : 20,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],

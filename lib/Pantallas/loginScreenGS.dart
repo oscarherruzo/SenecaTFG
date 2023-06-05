@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Providers/googleClass.dart';
-import 'package:seneca_tfg/Providers/googleProvider.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // CLASE LOGIN GS SCREEN
 class loginGSScreen extends StatefulWidget {
@@ -209,15 +207,22 @@ class _loginGSScreenState extends State<loginGSScreen> {
                 ),
               ),
               // POSICION DEL LOGO
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.15,
-                left: MediaQuery.of(context).size.width * 0.25,
-                child: Image.asset(
-                  'assets/logo.png',
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width * 0.5,
+              Positioned.fromRect(
+                rect: Rect.fromLTWH(
+                  MediaQuery.of(context).size.width * 0.25,
+                  MediaQuery.of(context).size.height * 0.15,
+                  MediaQuery.of(context).size.width * 0.5,
+                  MediaQuery.of(context).size.height * 0.3,
+                ),
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: Image.asset(
+                    'assets/logo.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
+
               // POSICION DEL ICONO DE LA JUNTA
               Positioned(
                 bottom: 100,

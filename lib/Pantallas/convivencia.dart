@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/alumnosExpulsados.dart';
-import 'package:seneca_tfg/Pantallas/mayoresScreen.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'banioScreen.dart';
-import 'daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // CONVIVENCIA MENU PANTALLAS
 class ConvivenciaScreen extends StatefulWidget {

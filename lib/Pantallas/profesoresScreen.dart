@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Providers/ProfesoresClase.dart';
-import 'package:seneca_tfg/Providers/profesores.dart';
-import 'package:seneca_tfg/Providers/profesoresProvider.dart';
-import 'package:seneca_tfg/Providers/ubicacionProvider.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'banioScreen.dart';
-import 'convivencia.dart';
-import 'daceScreen.dart';
 
 // PANTALLA PARA PROFESORES
 class ProfesoresScreen extends StatelessWidget {
@@ -21,8 +12,8 @@ class ProfesoresScreen extends StatelessWidget {
     final profesores = Provider.of<providerProfesores>(context).profesores;
     profesoresProvider.getUserFromSheet();
     // PROVIDER DE UBICACION
-    final ubicacionProvider = Provider.of<UbicacionProvider>(context);
-
+// Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
@@ -78,16 +69,6 @@ class ProfesoresScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => AlumnosScreen()),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Personal del Centro'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfesoresScreen()),
                       );
                     },
                   ),
@@ -204,7 +185,7 @@ class ProfesoresScreen extends StatelessWidget {
                       Text(
                         'E-Mail',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: isMobile ? 12 : 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -213,7 +194,7 @@ class ProfesoresScreen extends StatelessWidget {
                         child: Text(
                           'Teléfono',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 12 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -222,7 +203,7 @@ class ProfesoresScreen extends StatelessWidget {
                       Text(
                         'Más Información',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: isMobile ? 12 : 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -248,6 +229,9 @@ class ProfesoresScreen extends StatelessWidget {
                                       child: Text(
                                         '${profesores[index].mail}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 18,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(width: 5),
@@ -255,6 +239,9 @@ class ProfesoresScreen extends StatelessWidget {
                                       child: Text(
                                         '${profesores[index].telefono}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 18,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(width: 10),
@@ -276,24 +263,69 @@ class ProfesoresScreen extends StatelessWidget {
                                                 children: [
                                                   // CAMPOS QUE NOS PIDE JUNTO AL HORARIO
                                                   Text(
-                                                      'Nombre: ${profesores[index].nombre} ${profesores[index].apellidos}'),
+                                                    'Nombre: ${profesores[index].nombre} ${profesores[index].apellidos}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'E-Mail: ${profesores[index].mail}'),
+                                                    'E-Mail: ${profesores[index].mail}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'Teléfono: ${profesores[index].telefono}'),
+                                                    'Teléfono: ${profesores[index].telefono}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'Horario: ${profesores[index].horario}'),
+                                                    'Horario: ${profesores[index].horario}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text('Ubicación: '),
                                                   Text(
-                                                      'Lunes: \n${profesores[index].lunes}'),
+                                                    'Lunes: \n${profesores[index].lunes}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'Martes:\n ${profesores[index].martes}'),
+                                                    'Martes:\n ${profesores[index].martes}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'Miércoles: \n${profesores[index].miercoles}'),
+                                                    'Miércoles: \n${profesores[index].miercoles}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'Jueves:\n ${profesores[index].jueves}'),
+                                                    'Jueves:\n ${profesores[index].jueves}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                   Text(
-                                                      'Viernes:\n ${profesores[index].viernes}'),
+                                                    'Viernes:\n ${profesores[index].viernes}',
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          isMobile ? 12 : 18,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                               actions: [

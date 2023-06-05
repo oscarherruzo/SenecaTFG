@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/entradaClass.dart';
-import 'package:seneca_tfg/Providers/entradaProvider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'banioScreen.dart';
-import 'convivencia.dart';
-import 'daceScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // Clase para almacenar la información del informe
 class Informe {
@@ -39,6 +31,8 @@ class _InformesScreenState extends State<InformesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     final alumnosProvider = Provider.of<EntradaProvider>(context);
     final List<Entrada> alumnos = alumnosProvider.entradasLista;
     alumnosProvider.getUserFromSheet();
@@ -244,113 +238,24 @@ class _InformesScreenState extends State<InformesScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Fecha inicio:',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2025),
-                            ).then((date) {
-                              setState(() {
-                                fechaInicio = date;
-                              });
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              fechaInicio != null
-                                  ? DateFormat('dd-MM-yyyy')
-                                      .format(fechaInicio!)
-                                  : 'Seleccionar',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Fecha fin:',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2025),
-                            ).then((date) {
-                              setState(() {
-                                fechaFin = date;
-                              });
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              fechaFin != null
-                                  ? DateFormat('dd-MM-yyyy').format(fechaFin!)
-                                  : 'Seleccionar',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          // Filtrar los informes por fecha
-                          informesFiltrados = informes.where((informe) {
-                            if (fechaInicio != null && fechaFin != null) {
-                              DateTime informeDate =
-                                  DateTime.parse(informe.fecha);
-                              return informeDate.isAfter(fechaInicio!) &&
-                                  informeDate.isBefore(fechaFin!);
-                            }
-                            return true;
-                          }).toList();
-                        });
-                      },
-                      child: Text('Filtrar Informes'),
-                    ),
                     SizedBox(height: 20),
                     ListView.builder(
                       shrinkWrap: true,
                       itemCount: informesFiltrados.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          title: Text(informesFiltrados[index].nombre),
+                          title: Text(
+                            informesFiltrados[index].nombre,
+                            style: TextStyle(
+                              fontSize: isMobile ? 12 : 20,
+                            ),
+                          ),
                           subtitle: Text(
-                              'Salidas: ${informesFiltrados[index].vecesSalida}'),
+                            'Salidas: ${informesFiltrados[index].vecesSalida}',
+                            style: TextStyle(
+                              fontSize: isMobile ? 12 : 20,
+                            ),
+                          ),
                           trailing: Icon(Icons.arrow_forward),
                           onTap: () {
                             // Acción cuando se selecciona un informe

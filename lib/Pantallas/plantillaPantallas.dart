@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'alumnosExpulsados.dart';
-import 'alumnosScreen.dart';
-import 'anadirNuevoAlumnoScreen.dart';
-import 'banioScreen.dart';
-import 'convivencia.dart';
-import 'daceScreen.dart';
-import 'informesScreen.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // PLANTILLA PARA MANTENER EL FORMATO EN MIS PANTALLAS
 

@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/anadirNuevoAlumnoScreen.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 import 'package:gsheets/gsheets.dart';
-import 'package:flutter_intl/flutter_intl.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'alumnosScreen.dart';
-import 'banioScreen.dart';
-import 'convivencia.dart';
-import 'daceScreen.dart';
 
 // PANTALLA DE SALIDA
 class SalidaScreen extends StatefulWidget {
@@ -31,6 +21,8 @@ class _SalidaScreenState extends State<SalidaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     // PROVIDER Y LISTA DE ALUMNOS
     final alumnosProvider = Provider.of<ProviderScreen>(context);
     final List<Alumnos> alumnos = alumnosProvider.alumnos;
@@ -312,6 +304,9 @@ class _SalidaScreenState extends State<SalidaScreen> {
                               return ListTile(
                                 title: Text(
                                   '${alumno.nombre} ${alumno.apellidos}',
+                                  style: TextStyle(
+                                    fontSize: isMobile ? 12 : 18,
+                                  ),
                                   textAlign: TextAlign.left,
                                 ),
                                 trailing: ElevatedButton.icon(
@@ -403,7 +398,11 @@ class _SalidaScreenState extends State<SalidaScreen> {
                                 subtitle: tiempoFuera != null
                                     ? Text(
                                         // CONTADOR DE TIEMPO
-                                        'Tiempo fuera: ${tiempoFuera.inMinutes} min ${tiempoFuera.inSeconds % 60} seg')
+                                        'Tiempo fuera: ${tiempoFuera.inMinutes} min ${tiempoFuera.inSeconds % 60} seg',
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 18,
+                                        ),
+                                      )
                                     : null,
                               );
                             },

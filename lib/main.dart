@@ -1,33 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/alumnosExpulsados.dart';
-import 'package:seneca_tfg/Pantallas/convivencia.dart';
-import 'package:seneca_tfg/Pantallas/daceScreen.dart';
-import 'package:seneca_tfg/Pantallas/expulsionAnadir.dart';
-import 'package:seneca_tfg/Pantallas/informesScreen.dart';
-import 'package:seneca_tfg/Pantallas/loginScreenGS.dart';
 import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Pantallas/prueba.dart';
-import 'package:seneca_tfg/Pantallas/salidaScreen.dart';
-import 'package:seneca_tfg/Pantallas/banioScreen.dart';
-
-import 'package:seneca_tfg/Pantallas/loginScreen.dart';
-import 'package:seneca_tfg/Pantallas/mayoresScreen.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/ExpulsadosProvider.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
-import 'package:seneca_tfg/Providers/convivenciaProvider.dart';
-import 'package:seneca_tfg/Providers/daceProvider.dart';
-import 'package:seneca_tfg/Providers/entradaProvider.dart';
-import 'package:seneca_tfg/Providers/googleProvider.dart';
-import 'package:seneca_tfg/Providers/profesoresProvider.dart';
-import 'Pantallas/botonGoogle.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'Pantallas/plantillaPantallas.dart';
-import 'Providers/ubicacionProvider.dart';
+
 import 'firebase_options.dart';
 
 // CREDENCIALES
@@ -64,9 +39,6 @@ void main() async {
         ),
         ChangeNotifierProvider<providerProfesores>(
           create: (context) => providerProfesores(),
-        ),
-        ChangeNotifierProvider<UbicacionProvider>(
-          create: (context) => UbicacionProvider(),
         ),
         ChangeNotifierProvider<EmailProvider>(
           create: (context) => EmailProvider(),

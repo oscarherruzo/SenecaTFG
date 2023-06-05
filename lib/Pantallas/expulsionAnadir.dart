@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
-
-import 'package:flutter/material.dart';
-import 'package:gsheets/gsheets.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -51,7 +46,7 @@ class _InsertScreenState extends State<ExpulsadosInsertScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MenuScreen()),
+              MaterialPageRoute(builder: (context) => expulsadosScreen()),
             );
           },
         ),

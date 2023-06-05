@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:provider/provider.dart';
-import 'package:seneca_tfg/Pantallas/alumnosScreen.dart';
-import 'package:seneca_tfg/Pantallas/daceScreen.dart';
-import 'package:seneca_tfg/Pantallas/menuScreen.dart';
-import 'package:seneca_tfg/Pantallas/profesoresScreen.dart';
-import 'package:seneca_tfg/Providers/Alumnos.dart';
-import 'package:seneca_tfg/Providers/Provider.dart';
-import 'package:seneca_tfg/Providers/convivenciaClass.dart';
-import 'package:seneca_tfg/Providers/convivenciaProvider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'banioScreen.dart';
-import 'convivencia.dart';
+import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
 
 // PANTALLA MAYORES
 class MayoresScreen extends StatelessWidget {
@@ -22,7 +12,8 @@ class MayoresScreen extends StatelessWidget {
     final mayoresProvider = Provider.of<ConvivenciaProvider>(context);
     final List<ConvivenciaClass> mayores =
         Provider.of<ConvivenciaProvider>(context).mayoresLista;
-
+// Determinar si es un dispositivo móvil
+    final isMobile = MediaQuery.of(context).size.width < 600;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
@@ -206,7 +197,7 @@ class MayoresScreen extends StatelessWidget {
                         child: Text(
                           'Alumno',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 12 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -216,7 +207,7 @@ class MayoresScreen extends StatelessWidget {
                         child: Text(
                           'Curso',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 12 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -226,7 +217,7 @@ class MayoresScreen extends StatelessWidget {
                         child: Text(
                           'Aula',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 12 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -236,7 +227,7 @@ class MayoresScreen extends StatelessWidget {
                         child: Text(
                           'Periodo',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 12 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -246,7 +237,7 @@ class MayoresScreen extends StatelessWidget {
                         child: Text(
                           '+ Info',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 12 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -294,6 +285,9 @@ class MayoresScreen extends StatelessWidget {
                                       child: Text(
                                         '${mayores[index].periodo}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 18,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -313,9 +307,19 @@ class MayoresScreen extends StatelessWidget {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                        'E-Mail: ${mayores[index].mail}'),
+                                                      'E-Mail: ${mayores[index].mail}',
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            isMobile ? 12 : 18,
+                                                      ),
+                                                    ),
                                                     Text(
-                                                        'Teléfono: ${mayores[index].telefono}'),
+                                                      'Teléfono: ${mayores[index].telefono}',
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            isMobile ? 12 : 18,
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                                 // VOLVEMOS A LA PANTALLA CUANDO PULSEMOS CERRAR
@@ -332,7 +336,12 @@ class MayoresScreen extends StatelessWidget {
                                             },
                                           );
                                         },
-                                        child: Text('+ Info'),
+                                        child: Text(
+                                          '+ Info',
+                                          style: TextStyle(
+                                            fontSize: isMobile ? 12 : 18,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],

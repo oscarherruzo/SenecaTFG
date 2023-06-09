@@ -185,7 +185,7 @@ class ProfesoresScreen extends StatelessWidget {
                       Text(
                         'E-Mail',
                         style: TextStyle(
-                          fontSize: isMobile ? 12 : 18,
+                          fontSize: isMobile ? 11 : 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -194,7 +194,7 @@ class ProfesoresScreen extends StatelessWidget {
                         child: Text(
                           'Teléfono',
                           style: TextStyle(
-                            fontSize: isMobile ? 12 : 18,
+                            fontSize: isMobile ? 11 : 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -203,7 +203,7 @@ class ProfesoresScreen extends StatelessWidget {
                       Text(
                         'Más Información',
                         style: TextStyle(
-                          fontSize: isMobile ? 12 : 18,
+                          fontSize: isMobile ? 11 : 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

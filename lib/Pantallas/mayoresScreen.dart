@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// PANTALLA MAYORES
 class MayoresScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // PROVIDER DE MAYORES Y LISTA
     final mayoresProvider = Provider.of<ConvivenciaProvider>(context);
     final List<ConvivenciaClass> mayores =
         Provider.of<ConvivenciaProvider>(context).mayoresLista;
-// Determinar si es un dispositivo móvil
+
     final isMobile = MediaQuery.of(context).size.width < 600;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
@@ -29,11 +28,9 @@ class MayoresScreen extends StatelessWidget {
             );
           },
         ),
-        automaticallyImplyLeading:
-            false, // Esta línea evita mostrar la flecha de volver
+        automaticallyImplyLeading: false,
         actions: [],
       ),
-      // DRAWER O MENÚ HAMBURGUESA
       drawer: Drawer(
         child: Column(
           children: [
@@ -186,14 +183,13 @@ class MayoresScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // MOSTRAMOS LO QUE NOS PIDE
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        flex: 3,
+                        flex: 2,
                         child: Text(
                           'Alumno',
                           style: TextStyle(
@@ -213,7 +209,7 @@ class MayoresScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Text(
                           'Aula',
                           style: TextStyle(
@@ -223,7 +219,7 @@ class MayoresScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Text(
                           'Periodo',
                           style: TextStyle(
@@ -233,7 +229,7 @@ class MayoresScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Text(
                           '+ Info',
                           style: TextStyle(
@@ -247,7 +243,6 @@ class MayoresScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   Expanded(
                     child: mayores.isEmpty
-                        // CIRCULAR PROGRESS INDICATOR MIENTRAS CARGA LOS DATOS
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
@@ -264,6 +259,9 @@ class MayoresScreen extends StatelessWidget {
                                       child: Text(
                                         '${mayores[index].alumno}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 10 : 18,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -271,6 +269,9 @@ class MayoresScreen extends StatelessWidget {
                                       child: Text(
                                         '${mayores[index].curso}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 10 : 18,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -278,6 +279,9 @@ class MayoresScreen extends StatelessWidget {
                                       child: Text(
                                         '${mayores[index].aula}',
                                         textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 10 : 18,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -286,7 +290,7 @@ class MayoresScreen extends StatelessWidget {
                                         '${mayores[index].periodo}',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: isMobile ? 12 : 18,
+                                          fontSize: isMobile ? 10 : 18,
                                         ),
                                       ),
                                     ),
@@ -297,7 +301,6 @@ class MayoresScreen extends StatelessWidget {
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
-                                              // INFORMACION ADICIONAL EN UN ALERT DIALOG
                                               return AlertDialog(
                                                 title: Text('Información'),
                                                 content: Column(
@@ -322,7 +325,6 @@ class MayoresScreen extends StatelessWidget {
                                                     ),
                                                   ],
                                                 ),
-                                                // VOLVEMOS A LA PANTALLA CUANDO PULSEMOS CERRAR
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () {
@@ -340,6 +342,20 @@ class MayoresScreen extends StatelessWidget {
                                           '+ Info',
                                           style: TextStyle(
                                             fontSize: isMobile ? 12 : 18,
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          fixedSize:
+                                              MaterialStateProperty.all<Size>(
+                                            isMobile
+                                                ? Size(200, 30)
+                                                : Size(150, 50),
+                                          ),
+                                          textStyle: MaterialStateProperty.all<
+                                              TextStyle>(
+                                            TextStyle(
+                                              fontSize: isMobile ? 12 : 18,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -371,7 +387,6 @@ class MayoresScreen extends StatelessWidget {
     );
   }
 
-  // METODO PARA ABRIR LA URL, SINO IGNORAMOS QUE ESTAN DEPRECADAS CUANDO HACEMOS EL HOSTING NO NOS ABRE EL ENLACE AUNQUE EN LOCAL SI, SI LAS IGNORAMOS SI LO ABRE SUBIDO
   void _launchURL(String url) async {
     // ignore: deprecated_member_use
     if (await canLaunch(url)) {

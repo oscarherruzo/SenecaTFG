@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:seneca_tfg/Pantallas/pantallasExport.dart';
+import 'package:collection/collection.dart';
 
 // Clase para almacenar la información del informe
 class Informe {
@@ -28,6 +29,25 @@ class _InformesScreenState extends State<InformesScreen> {
   DateTime? fechaInicio;
   DateTime? fechaFin;
   List<Informe> informesFiltrados = [];
+  bool cargando = true;
+
+  @override
+  void initState() {
+    super.initState();
+    cargaDatos();
+  }
+
+  Future<void> cargaDatos() async {
+    await Future.delayed(Duration(seconds: 2));
+
+    // Obtener los datos
+    final alumnosProv = Provider.of<ProviderScreen>(context, listen: false);
+    await alumnosProv.getUserFromSheet();
+
+    setState(() {
+      cargando = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +56,12 @@ class _InformesScreenState extends State<InformesScreen> {
     final alumnosProvider = Provider.of<EntradaProvider>(context);
     final List<Entrada> alumnos = alumnosProvider.entradasLista;
     alumnosProvider.getUserFromSheet();
+
+    // LISTA DE ALUMNOS
+
+    final alumnosProv = Provider.of<ProviderScreen>(context);
+    alumnosProv.getUserFromSheet();
+    final List<Alumnos> alumnosLista = alumnosProv.alumnos;
 
     // Contador de salidas de los alumnos
     Map<String, int> contadorSalidas = {};
@@ -238,31 +264,154 @@ class _InformesScreenState extends State<InformesScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 20),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: informesFiltrados.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Text(
-                            informesFiltrados[index].nombre,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'Nombre',
                             style: TextStyle(
-                              fontSize: isMobile ? 12 : 20,
+                              fontSize: isMobile ? 11 : 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text(
-                            'Salidas: ${informesFiltrados[index].vecesSalida}',
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'Información',
+                            textAlign: TextAlign.end,
                             style: TextStyle(
-                              fontSize: isMobile ? 12 : 20,
+                              fontSize: isMobile ? 11 : 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          trailing: Icon(Icons.arrow_forward),
-                          onTap: () {
-                            // Acción cuando se selecciona un informe
-                          },
-                        );
-                      },
+                        ),
+                      ],
                     ),
+                    SizedBox(height: 20),
+                    if (cargando)
+                      CircularProgressIndicator()
+                    else
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: informesFiltrados.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text(
+                              informesFiltrados[index].nombre,
+                              style: TextStyle(
+                                fontSize: isMobile ? 12 : 20,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Salidas: ${informesFiltrados[index].vecesSalida}',
+                              style: TextStyle(
+                                fontSize: isMobile ? 12 : 20,
+                              ),
+                            ),
+                            trailing: Icon(Icons.arrow_forward),
+                            onTap: () {
+                              String nombreCompletoInforme =
+                                  informesFiltrados[index].nombre.toLowerCase();
+                              bool encontrado = false;
+                              Alumnos? alumnoEncontrado;
+
+                              // BUCLE PARA RECORRER LA LISTA A VER SI ENCONTRAMOS EL MISMO NOMBRE
+
+                              for (int i = 0; i < alumnosLista.length; i++) {
+                                String nombreCompletoAlumno =
+                                    '${alumnosLista[i].nombre.toLowerCase()} ${alumnosLista[i].apellidos.toLowerCase()}';
+
+                                if (nombreCompletoAlumno ==
+                                    nombreCompletoInforme) {
+                                  encontrado = true;
+                                  alumnoEncontrado = alumnosLista[i];
+                                  break;
+                                }
+                              }
+
+                              if (encontrado && alumnoEncontrado != null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        'Información del Alumno',
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 12 : 20,
+                                        ),
+                                      ),
+                                      content: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'Curso: ${alumnoEncontrado?.curso}',
+                                            style: TextStyle(
+                                              fontSize: isMobile ? 12 : 20,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Text(
+                                            'Observaciones: ${alumnoEncontrado?.observaciones}',
+                                            style: TextStyle(
+                                              fontSize: isMobile ? 12 : 20,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Text(
+                                            'Teléfono de la madre: ${alumnoEncontrado?.telMadre}',
+                                            style: TextStyle(
+                                              fontSize: isMobile ? 12 : 20,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Text(
+                                            'Teléfono del padre: ${alumnoEncontrado?.telPadre}',
+                                            style: TextStyle(
+                                              fontSize: isMobile ? 12 : 20,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          child: Text('Cerrar'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Alumno no encontrado'),
+                                      content: Text(
+                                          'No se encontró información del alumno.'),
+                                      actions: [
+                                        TextButton(
+                                          child: Text('Cerrar'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                          );
+                        },
+                      ),
                   ],
                 ),
               ),

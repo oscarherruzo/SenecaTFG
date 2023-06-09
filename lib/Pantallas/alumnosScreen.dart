@@ -381,6 +381,38 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                                                 fontSize: isMobile ? 12 : 20,
                                               ),
                                             ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              'Teléfono Madre:',
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              '${filteredAlumnos[index].telMadre}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              'Teléfono Padre:',
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              '${filteredAlumnos[index].telPadre}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                         actions: [

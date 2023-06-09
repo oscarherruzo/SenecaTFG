@@ -10,6 +10,8 @@ class anadirAlumno extends StatelessWidget {
   final _apellidosController = TextEditingController();
   final _cursoController = TextEditingController();
   final _observacionesController = TextEditingController();
+  final _telMadreController = TextEditingController();
+  final _telPadreController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -155,6 +157,23 @@ class anadirAlumno extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 30),
+                    TextFormField(
+                      controller: _telMadreController,
+                      decoration: InputDecoration(
+                        labelText: 'Teléfono madre',
+                        icon: Icon(Icons.phone_android_rounded),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _telPadreController,
+                      decoration: InputDecoration(
+                        labelText: 'Teléfono padre',
+                        icon: Icon(Icons.phone_android_outlined),
+                      ),
+                    ),
+
+                    SizedBox(height: 20),
                     ElevatedButton(
                       child: Text('Añadir Alumno'),
                       // FUNCIONALIDAD
@@ -194,13 +213,17 @@ class anadirAlumno extends StatelessWidget {
                             _nombreController.text,
                             _apellidosController.text,
                             _cursoController.text,
-                            _observacionesController.text
+                            _observacionesController.text,
+                            _telMadreController.text,
+                            _telPadreController.text
                           ]);
                           // LIMPIAMOS LOS CAMPOS DE TEXTO
                           _nombreController.clear();
                           _apellidosController.clear();
                           _cursoController.clear();
                           _observacionesController.clear();
+                          _telMadreController.clear();
+                          _telPadreController.clear();
                           // SNACKBAR PARA INDICAR QUE TODO SE HA INSERTADO BIEN
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

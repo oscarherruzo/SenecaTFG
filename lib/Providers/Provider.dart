@@ -26,8 +26,13 @@ class ProviderScreen extends ChangeNotifier {
     }
   }
 
-  Future<void> sendDataToGoogleSheet(String nombre, String apellidos,
-      String curso, String observaciones) async {
+  Future<void> sendDataToGoogleSheet(
+      String nombre,
+      String apellidos,
+      String curso,
+      String observaciones,
+      String telMadre,
+      String telPadre) async {
     final url =
         'https://script.google.com/macros/s/AKfycbxLg3bsWcLMKlUl7vb18qiXTDswkH-HXdIQEhO9r72nP3w4NxQmOBSIO3pmhgD26y5d/exec';
 
@@ -40,6 +45,8 @@ class ProviderScreen extends ChangeNotifier {
         'Apellidos': apellidos,
         'Curso': curso,
         'Observaciones': observaciones,
+        'telMadre': telMadre,
+        'telPadre': telPadre
       },
     );
 
@@ -61,11 +68,12 @@ class ProviderScreen extends ChangeNotifier {
       // Añadir los nuevos alumnos obtenidos de la API
       for (dynamic data in jsonData) {
         Alumnos alumno = Alumnos(
-          nombre: data["Nombre"],
-          apellidos: data["Apellidos"],
-          curso: data["Curso"],
-          observaciones: data['Observaciones'],
-        );
+            nombre: data["Nombre"],
+            apellidos: data["Apellidos"],
+            curso: data["Curso"],
+            observaciones: data['Observaciones'],
+            telMadre: data["telMadre"],
+            telPadre: data["telPadre"]);
 
         alumnos.add(alumno);
       }

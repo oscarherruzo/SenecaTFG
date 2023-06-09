@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/informes',
+      initialRoute: '/',
       routes: {
         '/': (context) => loginGSScreen(),
         '/menu': (context) => MenuScreen(),
